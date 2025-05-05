@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Profile - Mentor Secondary School</title>
+    <link rel="shortcut icon" href="logo.jpg" type="image/x-icon">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+        }
+
+       
+            * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            padding-top: 80px;
+            
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        header.hidden {
+            transform: translateY(-100%);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            border-radius: 50%;
+        }
+
+        .logo h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--secondary-color);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('adimBlock.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            text-align: center;
+            padding: 8rem 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            position: relative;
+            animation: fadeInUp 1s ease both;
+        }
+
+        .staff-profiles {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .profile-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .profile-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .profile-card:hover .profile-image img {
+            transform: scale(1.05);
+        }
+
+        .profile-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .profile-info h2 {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-info p {
+            color: var(--secondary-color);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        /* Footer Styles */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+
+        .footer-column p {
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: var(--light-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        .social-links-footer {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links-footer a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-links-footer a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+
+        .quick-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .quick-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .quick-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .logo {
+                margin-bottom: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .home-page1 {
+                padding: 4rem 1rem;
+            }
+
+            .home-page1 h2 {
+                font-size: 1.8rem;
+            }
+
+            .homepage2 {
+                flex-direction: column;
+                padding: 2rem;
+            }
+
+            .homepage2 img,
+            .homepage2 .content {
+                width: 100%;
+            }
+
+            .welcome-message {
+                padding: 2rem;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-column h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .social-links-footer {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .motto {
+                grid-template-columns: 1fr;
+            }
+
+            .home-pictures {
+                grid-template-columns: 1fr;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .logo {
+                margin-bottom: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .hero {
+                padding: 6rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .profiles-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .profiles-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.jpg" alt="Mentor Secondary School Logo">
+            <h2>Mentor Secondary School</h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="profile.html">Staff Profile</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="contact.html">Contacts</a></li>
+                <li><a href="faq.html">FAQs</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <h1>Our Dedicated Staff Members</h1>
+    </div>
+
+    <section class="staff-profiles">
+        <div class="profiles-grid">
+            <div class="profile-card">
+                <div class="profile-image">
+                    <img src="dos.jpeg" alt="Head Teacher">
+                </div>
+                <div class="profile-info">
+                    <h2>John Okware Agustus</h2>
+                    <p>Head Teacher</p>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-image">
+                    <img src="techers8 (2).jpg" alt="Director Of Studies">
+                </div>
+                <div class="profile-info">
+                    <h2>Mr. Biti Joseph</h2>
+                    <p>Director Of Studies</p>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-image">
+                    <img src="teachers3.jpeg" alt="Deputy Head Teacher">
+                </div>
+                <div class="profile-info">
+                    <h2>Mr. Ojuka Simon</h2>
+                    <p>Deputy Head Teacher</p>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-image">
+                    <img src="teachers2.jpeg" alt="H.O.D Physics">
+                </div>
+                <div class="profile-info">
+                    <h2>Mr. Kituzi Amon</h2>
+                    <p>H.O.D Physics</p>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-image">
+                    <img src="teacher5.jpeg" alt="School Director">
+                </div>
+                <div class="profile-info">
+                    <h2>Mr. Mukwaya George</h2>
+                    <p>School Director</p>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-image">
+                    <img src="teachers.jpeg" alt="H.O.D Mathematics">
+                </div>
+                <div class="profile-info">
+                    <h2>Mr. Akol Isaac.</h2>
+                    <p>H.O.D Mathematics</p>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-image">
+                    <img src="techers8 (1).jpg" alt="H.O.D Agriculture">
+                </div>
+                <div class="profile-info">
+                    <h2>Mr. Muduni Willam</h2>
+                    <p>H.O.D Agriculture</p>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-image">
+                    <img src="techers1.jpeg" alt="H.O.D History">
+                </div>
+                <div class="profile-info">
+                    <h2>Mr. Okiringi Isaac</h2>
+                    <p>H.O.D History</p>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-image">
+                    <img src="hod-languages.jpeg" alt="H.O.D Languages">
+                </div>
+                <div class="profile-info">
+                    <h2>Mrs. Ritah Barungi</h2>
+                    <p>H.O.D Languages</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-column">
+            <h3>About Us</h3>
+            <p>Mentor Secondary School is committed to providing quality education that nurtures academic
+                excellence, moral values, and practical skills in a supportive environment.</p>
+            <div class="social-links-footer">
+                <a href="https://www.facebook.com/profile.php?id=100089438504646" aria-label="Facebook"><i
+                        class='bx bxl-facebook'></i></a>
+                <a href="https://x.com/mentorss2015?t=zbt3mx17e9wGjoDXv2odHA&s=08" aria-label="Twitter"><i
+                        class='bx bxl-twitter'></i></a>
+                <a href="https://www.instagram.com" aria-label="Instagram"><i class='bx bxl-instagram'></i></a>
+                <a href="https://www.youtube.com" aria-label="YouTube"><i class='bx bxl-youtube'></i></a>
+            </div>
+        </div>
+
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="profile.html">Staff Profile</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="faq.html">FAQs</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Contact Info</h3>
+            <p><i class='bx bx-map'></i> Gwengabara, Boroboro, Soroti Road, Lira (U)</p>
+            <p><i class='bx bx-phone'></i> +256 772 830581 / 0752698778</p>
+            <p><i class='bx bx-envelope'></i> mentorss2015@gmail.com</p>
+            <p><i class='bx bx-time'></i> Mon-Fri: 8:00 AM - 5:00 PM</p>
+        </div>
+
+        <div class="footer-column">
+            <h3>Newsletter</h3>
+            <p>Subscribe to our newsletter to receive updates on school news and events.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your Email" required>
+                <button type="submit" class="button1">Subscribe</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="copyright">
+        <p>&copy; 2025 Mentor Secondary School. All rights reserved. Developed and powered by Computer Scientists
+            Lira-university.</p>
+        <div class="quick-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="https://www.google.com/maps/place/Mentor+Senior+Secondary+School/@2.275243,32.8892302,17z/data=!3m1!4b1!4m6!3m5!1s0x1770b9e4d64d0bbf:0xa73b4f2dfb7fa11c!8m2!3d2.275243!4d32.8918051!16s%2Fg%2F11q5k3m9w1?entry=ttu"
+>Sitemap</a>
+        </div>
+    </div>
+</footer>
+
+
+    <script>
+        // Scroll animation for profile cards
+        document.addEventListener('DOMContentLoaded', function () {
+            const profileCards = document.querySelectorAll('.profile-card');
+
+            // Intersection Observer for scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 150);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            // Observe all profile cards
+            profileCards.forEach(card => {
+                observer.observe(card);
+            });
+
+            // Header animation
+            const header = document.querySelector('header');
+            let lastScroll = 0;
+
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.pageYOffset;
+
+                if (currentScroll <= 0) {
+                    header.style.transform = 'translateY(0)';
+                    return;
+                }
+
+                if (currentScroll > lastScroll && !header.classList.contains('scroll-down')) {
+                    header.style.transform = 'translateY(-100%)';
+                } else if (currentScroll < lastScroll && header.classList.contains('scroll-down')) {
+                    header.style.transform = 'translateY(0)';
+                }
+
+                lastScroll = currentScroll;
+            });
+
+            // Hero text animation
+            const heroText = document.querySelector('.hero h1');
+            if (heroText) {
+                heroText.style.opacity = '0';
+                setTimeout(() => {
+                    heroText.style.opacity = '1';
+                }, 500);
+            }
+             // Header scroll behavior
+           
+
+            window.addEventListener('scroll', function () {
+                const currentScroll = window.pageYOffset;
+
+                if (currentScroll <= 0) { // At top of page, always show header
+                    header.classList.remove('hidden'); return;
+                } if (currentScroll > lastScroll &&
+                    !header.classList.contains('hidden')) {
+                    // Scrolling down
+                    header.classList.add('hidden');
+                } else if (currentScroll < lastScroll && header.classList.contains('hidden')) { // Scrolling
+                    upheader.classList.remove('hidden');
+                } lastScroll = currentScroll;
+            });
+        });
+    </script>
+</body>
+
+</html>
